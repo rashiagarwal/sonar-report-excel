@@ -4,16 +4,13 @@ import org.apache.log4j.Logger;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public final class Sonar {
+public class Connection {
 
-  private static final Logger logger = Logger.getLogger("Sonar Connectivity ");
+  private static final Logger logger = Logger.getLogger("Connection Connectivity ");
 
-  private Sonar() {
-  }
-
-  public static Retrofit createConnection(String url) {
+  public Retrofit create() {
     try {
-//      String url = System.getProperty("url");
+      String url = System.getProperty("url");
 
       return new Retrofit.Builder().baseUrl(url)
           .addConverterFactory(GsonConverterFactory.create())

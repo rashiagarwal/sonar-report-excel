@@ -6,15 +6,11 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.sonarqube.model.Issue;
 import org.sonarqube.model.TextRange;
 
+import javax.inject.Inject;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Set;
@@ -27,8 +23,12 @@ public class Excel {
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
 
+  @Inject
+  Excel(XSSFWorkbook workbook) {
+    this.workbook = workbook;
+  }
+
   public void write(Set<Issue> issues) throws IOException {
-    workbook = new XSSFWorkbook();
     String safeName = WorkbookUtil.createSafeSheetName("Issues");
     sheet = workbook.createSheet(safeName);
 

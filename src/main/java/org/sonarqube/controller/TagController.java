@@ -6,21 +6,22 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
 
+import static java.lang.System.getProperty;
 import static java.util.Collections.emptySet;
 
 public class TagController {
   private TagService service;
-  private String key;
 
-  public TagController(Retrofit retrofit, String key) {
+  @Inject
+  TagController(Retrofit retrofit) {
     this.service = retrofit.create(TagService.class);
-    this.key = key;
   }
 
-  public Set<String> getTags() throws IOException {
+  Set<String> getTags() throws IOException {
     TagResource resource = getResource();
     if (resource != null) {
       return resource.getTags();
@@ -37,7 +38,7 @@ public class TagController {
   }
 
   private Response<TagResource> execute() throws IOException {
-    Call<TagResource> call = service.listTags(key);
+    Call<TagResource> call = service.listTags(getProperty("Key"));
     return call.execute();
   }
 }
